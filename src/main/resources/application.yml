@@ -1,0 +1,40 @@
+spring:
+  datasource:
+#    url: jdbc:h2:mem:maybankdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:file:./data/maybankdb;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  batch:
+    jdbc:
+      initialize-schema: always
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+  security:
+    user:
+      name: admin
+      password: password
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        orm:
+          jdbc:
+            bind: trace
+#  sql:
+#    init:
+#      mode: always
+#      schema-locations: classpath:schema-h2.sql
+
+input:
+  file: src/main/resources/data/dataSource.txt
+
+

@@ -1,0 +1,2 @@
+accountNumber|trxAmount|description|trxDate|trxTime|customerId
+12345|100.50|Test transaction|2025-10-15|12:34:56|C001
