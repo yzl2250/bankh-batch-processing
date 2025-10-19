@@ -1,4 +1,6 @@
-# 💳 Maybank Batch Processing
+[![codecov](https://codecov.io/gh/your-username/your-repo/branch/main/graph/badge.svg)](https://codecov.io/gh/your-username/your-repo)
+
+# 🐯 Maybank Batch Processing
 
 A simple **Spring Boot** project simulating batch transaction processing for demonstration purposes.
 
@@ -8,6 +10,7 @@ This application showcases:
 - Data transfer layer via **DTOs**
 - Filtering and pagination with **Spring Data JPA Specifications**
 - Integration with **H2 Database (file-based)**
+- **Optimistic locking** for concurrent updates on the Update API
 - **Swagger UI** for API documentation and testing
 
 ---
@@ -25,6 +28,11 @@ This application showcases:
 
 - 🧩 **DTO & Mapper Layer**
   - Separation between entity and response/request models for cleaner architecture
+ 
+- 🔐 **Concurrent Update Handling**
+  - Uses Optimistic Locking via JPA @Version field
+  - Prevents accidental overwriting of records when multiple users attempt to update the same transaction concurrently
+  - Returns HTTP 409 Conflict on version mismatch
 
 - 🧠 **Error Handling**
   - Centralized via `GlobalExceptionHandler`
@@ -49,6 +57,30 @@ This application showcases:
 
 ---
 
+## Design Patterns Used
+
+| Pattern | Description | Reason for Use |
+|----------|--------------|----------------|
+| **Layered Architecture** | Application is structured into Controller → Service → Repository layers. | Ensures clean separation of concerns and improves maintainability. |
+| **Repository Pattern** | `TransactionRecordRepository` handles data access via Spring Data JPA. | Abstracts database logic from business logic for cleaner code. |
+| **Service Pattern** | `TransactionRecordService` and `TransactionRecordServiceImpl` encapsulate business logic. | Keeps controllers lightweight and promotes reusability. |
+| **DTO (Data Transfer Object)** | Request and Response DTOs (`TransactionRecordRequest`, `TransactionRecordResponse`) separate entity and API representations. | Improves security and flexibility for API data exposure. |
+| **Mapper Pattern** | `TransactionRecordMapper` converts between entities and DTOs. | Centralizes mapping logic, ensuring consistent transformation across layers. |
+| **Singleton Configuration** | `BatchConfig` and `SecurityConfig` are singletons managed by Spring. | Ensures consistent configuration across the application. |
+| **Strategy Pattern (Spring Batch)** | Reader and Writer components act as interchangeable strategies within the batch job. | Promotes modularity — allows different data sources or destinations without changing job logic. |
+| **Optimistic Locking (Concurrency Control)** | `TransactionRecord` entity includes a `@Version` field for version tracking. | Safely handles concurrent updates, ensuring data consistency and preventing lost updates. |
+
+---
+
+## Design Rationale
+
+This project follows a **modular, layered design** to ensure testability and scalability.  
+Each major concern (API, service, persistence, and batch processing) is isolated, allowing easy maintenance and future extension.  
+Spring Batch provides a structured **chunk-oriented processing model**, while DTO and Mapper layers prevent entity leakage across boundaries.  
+This combination promotes clean architecture and reduces coupling between components.
+
+---
+
 ## 🗄️ Access H2 Database
 
 | Setting | Value |
@@ -69,8 +101,10 @@ Delete the file to reset all data (IDs will restart from 1).
 URL: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)  
 **Basic Authentication:**
 
-Username: admin
-Password: password
+| Setting | Value |
+|----------|--------|
+| Username | `admin` |
+| Password | `password` |
 
 ---
 
@@ -99,5 +133,10 @@ mvn clean install
 mvn spring-boot:run
 
 Access the APIs via Swagger or any REST client.
+```
 
-🧪 Running Tests
+## 🧪 Running Tests
+
+```bash
+mvn test
+```
