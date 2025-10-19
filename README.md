@@ -1,6 +1,7 @@
-[![codecov](https://codecov.io/gh/yzl2250/bankh-batch-processing/branch/main/graph/badge.svg)](https://codecov.io/gh/yzl2250/bankh-batch-processing)
-
 # 🐯 Maybank Batch Processing
+
+[![Build Status](https://github.com/yzl2250/bankh-batch-processing/actions/workflows/ci.yml/badge.svg)](https://github.com/yzl2250/bankh-batch-processing/actions)
+[![codecov](https://codecov.io/gh/yzl2250/bankh-batch-processing/branch/main/graph/badge.svg)](https://codecov.io/gh/yzl2250/bankh-batch-processing)
 
 A simple **Spring Boot** project simulating batch transaction processing for demonstration purposes.
 
