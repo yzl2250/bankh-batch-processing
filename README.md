@@ -8,6 +8,7 @@ This application showcases:
 - Data transfer layer via **DTOs**
 - Filtering and pagination with **Spring Data JPA Specifications**
 - Integration with **H2 Database (file-based)**
+- **Optimistic locking** for concurrent updates on the Update API
 - **Swagger UI** for API documentation and testing
 
 ---
@@ -25,6 +26,11 @@ This application showcases:
 
 - 🧩 **DTO & Mapper Layer**
   - Separation between entity and response/request models for cleaner architecture
+ 
+- 🔐 **Concurrent Update Handling**
+  - Uses Optimistic Locking via JPA @Version field
+  - Prevents accidental overwriting of records when multiple users attempt to update the same transaction concurrently
+  - Returns HTTP 409 Conflict on version mismatch
 
 - 🧠 **Error Handling**
   - Centralized via `GlobalExceptionHandler`
@@ -59,7 +65,8 @@ This application showcases:
 | **DTO (Data Transfer Object)** | Request and Response DTOs (`TransactionRecordRequest`, `TransactionRecordResponse`) separate entity and API representations. | Improves security and flexibility for API data exposure. |
 | **Mapper Pattern** | `TransactionRecordMapper` converts between entities and DTOs. | Centralizes mapping logic, ensuring consistent transformation across layers. |
 | **Singleton Configuration** | `BatchConfig` and `SecurityConfig` are singletons managed by Spring. | Ensures consistent configuration across the application. |
-| **Strategy Pattern (Spring Batch)** | Step processing strategies (reader, processor, writer) are modular and interchangeable. | Increases flexibility in batch processing pipeline design. |
+| **Strategy Pattern (Spring Batch)** | Reader and Writer components act as interchangeable strategies within the batch job. | Promotes modularity — allows different data sources or destinations without changing job logic. |
+| **Optimistic Locking (Concurrency Control)** | `TransactionRecord` entity includes a `@Version` field for version tracking. | Safely handles concurrent updates, ensuring data consistency and preventing lost updates. |
 
 ---
 
