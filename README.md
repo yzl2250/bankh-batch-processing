@@ -122,8 +122,10 @@ mvn clean install
 mvn spring-boot:run
 
 Access the APIs via Swagger or any REST client.
+```bash
 
 🧪 Running Tests
 
 ```bash
 mvn test
+```bash
