@@ -1,4 +1,4 @@
-# 💳 Maybank Batch Processing
+# 🐯 Maybank Batch Processing
 
 A simple **Spring Boot** project simulating batch transaction processing for demonstration purposes.
 
@@ -46,6 +46,29 @@ This application showcases:
 | Testing | JUnit 5 |
 | Documentation | Swagger UI |
 | Build Tool | Maven |
+
+---
+
+## Design Patterns Used
+
+| Pattern | Description | Reason for Use |
+|----------|--------------|----------------|
+| **Layered Architecture** | Application is structured into Controller → Service → Repository layers. | Ensures clean separation of concerns and improves maintainability. |
+| **Repository Pattern** | `TransactionRecordRepository` handles data access via Spring Data JPA. | Abstracts database logic from business logic for cleaner code. |
+| **Service Pattern** | `TransactionRecordService` and `TransactionRecordServiceImpl` encapsulate business logic. | Keeps controllers lightweight and promotes reusability. |
+| **DTO (Data Transfer Object)** | Request and Response DTOs (`TransactionRecordRequest`, `TransactionRecordResponse`) separate entity and API representations. | Improves security and flexibility for API data exposure. |
+| **Mapper Pattern** | `TransactionRecordMapper` converts between entities and DTOs. | Centralizes mapping logic, ensuring consistent transformation across layers. |
+| **Singleton Configuration** | `BatchConfig` and `SecurityConfig` are singletons managed by Spring. | Ensures consistent configuration across the application. |
+| **Strategy Pattern (Spring Batch)** | Step processing strategies (reader, processor, writer) are modular and interchangeable. | Increases flexibility in batch processing pipeline design. |
+
+---
+
+## Design Rationale
+
+This project follows a **modular, layered design** to ensure testability and scalability.  
+Each major concern (API, service, persistence, and batch processing) is isolated, allowing easy maintenance and future extension.  
+Spring Batch provides a structured **chunk-oriented processing model**, while DTO and Mapper layers prevent entity leakage across boundaries.  
+This combination promotes clean architecture and reduces coupling between components.
 
 ---
 
@@ -101,3 +124,6 @@ mvn spring-boot:run
 Access the APIs via Swagger or any REST client.
 
 🧪 Running Tests
+
+```bash
+mvn test
