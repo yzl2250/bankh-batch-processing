@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/your-username/your-repo/branch/main/graph/badge.svg)](https://codecov.io/gh/your-username/your-repo)
+
 # 🐯 Maybank Batch Processing
 
 A simple **Spring Boot** project simulating batch transaction processing for demonstration purposes.
