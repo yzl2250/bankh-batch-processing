@@ -92,8 +92,10 @@ Delete the file to reset all data (IDs will restart from 1).
 URL: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)  
 **Basic Authentication:**
 
-Username: admin
-Password: password
+| Setting | Value |
+|----------|--------|
+| Username | `admin` |
+| Password | `password` |
 
 ---
 
