@@ -37,8 +37,9 @@ public class TransactionRecordServiceImpl implements TransactionRecordService {
         }
 
         if (description != null && !description.isBlank()) {
+            String pattern = "%" + description.toLowerCase() + "%";
             spec = spec.and((root, query, cb) ->
-                    cb.like(root.get("description"), "%" + description + "%"));
+                    cb.like(cb.lower(root.get("description")), pattern));
         }
         Page<TransactionRecord> entities = repository.findAll(spec, pageable);
         List<TransactionRecordResponse> content = entities
